@@ -15,14 +15,18 @@ read_excel_allsheets <- function(filename, tibble = FALSE) {
   x
 }
 
+setwd("~/Git/paper_rock")
+
 Oyster <- read_excel_allsheets("Oyster_Counting.xlsx")
 
 Oyster$data_sentinel
 Oyster$key
 Oyster$data_transect
 #Adding Key column to each dataframe
-Oyster_sentinel<-merge.data.frame(Oyster$data_sentinel,Oyster$key,by=c("rock"))
-Oyster_transect<-merge.data.frame(Oyster$data_transect,Oyster$key,by=c("rock"))
+Oyster_sentinel<-merge.data.frame(Oyster$data_sentinel,Oyster$key,
+                                  by=c("rock"))
+Oyster_transect<-merge.data.frame(Oyster$data_transect,Oyster$key,
+                                  by=c("rock"))
 
 #########################
 #Sentinel Rock stuff
@@ -46,13 +50,13 @@ mean(Oyster_sentinel$count/Oyster_sentinel$true_n)
 sd(Oyster_sentinel$count/Oyster_sentinel$true_n)/mean(Oyster_sentinel$count/Oyster_sentinel$true_n)
 
 #As a function of experience
-plot(as.factor(Oyster_sentinel$experience),Oyster_sentinel$count/Oyster_sentinel$true_n,ylim=c(0.7,1.2), pch=16, las=1, ylab="Catchability", main="Sentinel Rock", xlab="Experience", col=c(2,3))
+plot(as.factor(Oyster_sentinel$experience),Oyster_sentinel$count/Oyster_sentinel$true_n,ylim=c(0.7,1.2), pch=16, las=1, ylab="Catchability", main="Sentinel Rock", xlab="Experience", col=c(2,5))
 points(aggregate(Oyster_sentinel$count/Oyster_sentinel$true_n, by=list(as.factor(Oyster_sentinel$experience)), FUN=mean), col=4, pch=16)
 plot(aggregate(Oyster_sentinel$count/Oyster_sentinel$true_n, by=list(as.factor(Oyster_sentinel$experience)), FUN=function(x) {sd(x)/mean(x)}),ylim=c(0,0.2), pch=16, las=1, ylab="CV of Catchability", main="Sentinel Rock (CV)", xlab="Experience")
 
 
 #Catchability for each observer
-plot(as.factor(Oyster_sentinel$person),Oyster_sentinel$count/Oyster_sentinel$true_n,ylim=c(0.8,1.2), pch=16, las=1, ylab="Catchability", main="Sentinel Rock", xlab="Person", col=c(3,2,2,2,3))
+plot(as.factor(Oyster_sentinel$person),Oyster_sentinel$count/Oyster_sentinel$true_n,ylim=c(0.8,1.2), pch=16, las=1, ylab="Catchability", main="Sentinel Rock", xlab="Person", col=c(5,2,2,2,5))
 points(aggregate(Oyster_sentinel$count/Oyster_sentinel$true_n, by=list(as.factor(Oyster_sentinel$person)), FUN=mean), col=4, pch=16)
 plot(aggregate(Oyster_sentinel$count/Oyster_sentinel$true_n, by=list(as.factor(Oyster_sentinel$person)), FUN=function(x) {sd(x)/mean(x)}),ylim=c(0,0.2), pch=16, las=1, ylab="CV of Catchability", main="Sentinel Rock (CV)", xlab="Experience")
 
@@ -60,7 +64,7 @@ plot(aggregate(Oyster_sentinel$count/Oyster_sentinel$true_n, by=list(as.factor(O
 #Transect
 ##########################
 #Counts vs True Numbers
-plot(as.factor(Oyster_transect$rock),Oyster_transect$count, ylim=c(0,250), xlab="Rock", las=1, ylab="Count")
+plot(as.factor(Oyster_transect$rock),Oyster_transect$count, ylim=c(0,250), xlab="Rock", las=1, ylab="Count", main="Count by rock from transect")
 points(as.factor(Oyster_transect$rock),Oyster_transect$true_n, col=2, pch=16)
 
 #Catchability
